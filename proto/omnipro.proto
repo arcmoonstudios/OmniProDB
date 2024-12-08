@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package omnipro.db;
+
+service DbService {
+    rpc ConnectDb (ConnectRequest) returns (ConnectResponse);
+    rpc ExecuteQuery (QueryRequest) returns (QueryResponse);
+    rpc CreateTable (CreateTableRequest) returns (CreateTableResponse);
+    rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
+    rpc Backup (BackupRequest) returns (BackupResponse);
+    rpc Restore (RestoreRequest) returns (RestoreResponse);
+}
+
+message ConnectRequest {
+    string url = 1;
+    string namespace = 2;
+    string database = 3;
+}
+
+message ConnectResponse {
+    bool success = 1;
+    string error = 2;
+}
+
+message QueryRequest {
+    string query = 1;
+    map<string, string> parameters = 2;
+}
+
+message QueryResponse {
+    bool success = 1;
+    string result = 2;
+    string error = 3;
+}
+
+message CreateTableRequest {
+    string name = 1;
+    repeated FieldDefinition fields = 2;
+    repeated IndexDefinition indexes = 3;
+}
+
+message CreateTableResponse {
+    bool success = 1;
+    string error = 2;
+}
+
+message FieldDefinition {
+    string name = 1;
+    string field_type = 2;
+    bool required = 3;
+}
+
+message IndexDefinition {
+    string name = 1;
+    repeated string fields = 2;
+    bool unique = 3;
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+    bool healthy = 1;
+    string status = 2;
+}
+
+message BackupRequest {
+    string path = 1;
+}
+
+message BackupResponse {
+    bool success = 1;
+    string error = 2;
+}
+
+message RestoreRequest {
+    string path = 1;
+}
+
+message RestoreResponse {
+    bool success = 1;
+    string error = 2;
+}

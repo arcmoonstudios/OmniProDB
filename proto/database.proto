@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package database;
+
+service DatabaseService {
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+    rpc GetUser (GetUserRequest) returns (GetUserResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+}
+
+message User {
+    string id = 1;
+    string email = 2;
+    string name = 3;
+    string password_hash = 4;
+    string role = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+message CreateUserRequest {
+    string email = 1;
+    string name = 2;
+    string password = 3;
+    string role = 4;
+}
+
+message CreateUserResponse {
+    User user = 1;
+}
+
+message GetUserRequest {
+    string id = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+message UpdateUserRequest {
+    string id = 1;
+    string email = 2;
+    string name = 3;
+    string role = 4;
+}
+
+message UpdateUserResponse {
+    User user = 1;
+}
+
+message DeleteUserRequest {
+    string id = 1;
+}
+
+message DeleteUserResponse {}
